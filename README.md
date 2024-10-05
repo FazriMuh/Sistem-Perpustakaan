@@ -1,25 +1,37 @@
-# Sistem-Perpustakaan
+# Sistem Perpustakaan
 Skill Test Gefami
 
 ## Installation
 
 ### Setting Up Virtual Environment (Optional)
+
+To create and activate a virtual environment, run the following commands:
+
 ```bash
+# Create a virtual environment
 python -m venv venv
-source venv/bin/activate  # For Unix/Mac
-venv\Scripts\activate  # For Windows
+
+# Activate the virtual environment
+# For Unix/Mac
+source venv/bin/activate  
+
+# For Windows
+venv\Scripts\activate  
 ```
 
-### Package Installation Code
+### Package Installation
 
 To install all the required packages, use the following command:
 
 ```bash
 pip install Flask
 ```
-### the code
 
-download this repository, then place this folder next to the venv folder. Then you're gonna have this file structure:
+### Project Structure
+
+After downloading this repository, ensure the folder structure looks like this, with the project folder next to the `venv` folder:
+
+```
 /venv
 /your_project
 │
@@ -37,11 +49,15 @@ download this repository, then place this folder next to the venv folder. Then y
 │
 ├── /static
 │   └── Image
-│            └── front-image3.png
+│       └── front-image3.png
 │
 └── app.py
+```
 
-## Run App in Terminal
-```pearl
+## Running the Application
+
+To run the application, use the following command in your terminal:
+
+```bash
 python app.py
 ```
