@@ -71,3 +71,7 @@ To access the admin dashboard, follow these steps:
 2. In your web browser, enter the following URL: `http://127.0.0.1:5000/dashboard`.
 
 This will direct you to the admin dashboard of your application.
+
+## Preview System Image
+
+![Preview After running http://127.0.0.1:5000](static/image/Running.png)
