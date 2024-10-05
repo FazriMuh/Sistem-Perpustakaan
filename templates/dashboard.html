@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BUKU Jendela Ilmu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/css/jquery.dataTables.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #818bdc;
+            color: white;
+        }
+        .btn-delete {
+            padding: 2px 5px;
+            font-size: 0.8rem;
+        }
+        button.btn-primary, .btn-primary {
+            background-color: #818bdc;
+            border-color: #818bdc;
+        }
+        button.btn-primary:hover, .btn-primary:hover {
+            background-color: #bdadec;
+            border-color: #bdadec;
+        }
+        .flash-message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .navbar {
+            background-color: #818bdc;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #f0f0f0;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BUKU Jendela Ilmu - Admin Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#daftar-buku">Daftar Buku</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#daftar-pinjaman">Daftar Pinjaman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div id="daftar-buku" class="section">
+            <h2>Daftar Buku</h2>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ url_for('add_book') }}" class="btn btn-primary">Tambah Buku Baru</a>
+            </div>
+            <table id="bookTable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Judul</th>
+                        <th>Penulis</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.judul }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ 'Tersedia' if book.status == '0' else 'Dipinjam' }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
+                                <button type="submit" class="btn btn-danger btn-delete">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="daftar-pinjaman" class="section">
+            <h2>Daftar Pinjaman</h2>
+            <table id="loanTable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID Peminjam</th>
+                        <th>Judul Buku</th>
+                        <th>Tanggal Batas Pinjaman</th>
+                        <th>Status</th>
+                        <th>Tanggal Pengembalian</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in loans %}
+                    <tr>
+                        <td>{{ loan.id_peminjam }}</td>
+                        <td>{{ loan.judul_buku }}</td>
+                        <td>{{ loan.tanggal_batas_pinjaman }}</td>
+                        <td>
+                            {% if loan.status == '1' %}
+                                Dipinjam
+                            {% elif loan.status == '2' %}
+                                Telat
+                            {% else %}
+                                Dikembalikan
+                            {% endif %}
+                        </td>
+                        <td>{{ loan.tanggal_pengembalian }}</td>
+                        <td>
+                            {% if loan.status == '1' or loan.status == '2' %}
+                            <a href="{{ url_for('change_status', loan_id=loan.id_peminjam) }}" class="btn btn-sm btn-primary">Kembalikan</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#bookTable, #loanTable').DataTable({
+                "pageLength": 10,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "search": "Cari:",
+                    "lengthMenu": "Tampilkan _MENU_ entri",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Selanjutnya",
+                        "previous": "Sebelumnya"
+                    }
+                }
+            });
+
+            // Auto-hide flash messages after 5 seconds
+            setTimeout(function() {
+                $('.flash-message').fadeOut('slow');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
