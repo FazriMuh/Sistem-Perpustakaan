@@ -61,3 +61,13 @@ To run the application, use the following command in your terminal:
 ```bash
 python app.py
 ```
+
+## Accessing the Admin Dashboard
+
+To access the admin dashboard, follow these steps:
+
+1. Make sure your application is running. You should see an endpoint like `http://127.0.0.1:5000` in your terminal.
+   
+2. In your web browser, enter the following URL: `http://127.0.0.1:5000/dashboard`.
+
+This will direct you to the admin dashboard of your application.
