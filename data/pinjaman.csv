@@ -1,0 +1,9 @@
+id_peminjam,judul_buku,tanggal_batas_pinjaman,tanggal_pengembalian,status
+2,The Great Gatsby,2024-10-11T02:51,2024-10-05 02:52:39,0
+2,asd,2024-10-31T02:53,2024-10-05 06:30:01,0
+2,1984,2024-10-12T06:30,2024-10-05 06:41:45,0
+2,1984,2024-10-05T06:54,2024-10-05 07:31:21,0
+2,The Great Gatsby,2024-10-05T07:32,2024-10-05 07:31:22,0
+2,The Great Gatsby,2024-10-05T07:36,2024-10-05 07:32:29,0
+2,The Great Gatsby,2024-10-05T07:38,2024-10-05 07:41:46,0
+1,Brave New World,2024-10-05T07:45,NULL,1
