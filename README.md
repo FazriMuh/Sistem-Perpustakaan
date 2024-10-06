@@ -29,7 +29,7 @@ pip install Flask
 
 ### Project Structure
 
-After downloading this repository, ensure the folder structure looks like this, with the project folder next to the `venv` folder:
+After downloading this repository, ensure the folder structure looks like this, with all the project folders next to the `venv` folder:
 
 ```
 /venv
