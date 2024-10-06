@@ -33,25 +33,20 @@ After downloading this repository, ensure the folder structure looks like this, 
 
 ```
 /venv
-/your_project
-│
-├── /data
+/data
 │   ├── user.csv
 │   ├── buku.csv
 │   └── pinjaman.csv
-│
-├── /templates
+/templates
 │   ├── home.html
 │   ├── login.html
 │   ├── register.html
 │   ├── dashboard.html
 │   └── add_book.html
-│
-├── /static
+/static
 │   └── Image
 │       └── front-image3.png
-│
-└── app.py
+app.py
 ```
 
 ## Running the Application
